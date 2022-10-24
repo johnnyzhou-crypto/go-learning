@@ -38,7 +38,7 @@ func avoid_leaking_generate(ctx context.Context) <-chan int {
 			case ch <- n:
 				n++
 				//default:
-				//	fmt.Println("default...")
+				//	fmt.Println("goroutine selecting...")
 			}
 		}
 	}()
@@ -69,6 +69,8 @@ func g2() {
 
 func main() {
 
+	//go tool pprof -http=":8081" goroutine
+	//http://127.0.0.1:6060/debug/pprof/goroutine
 	go func() {
 		log.Println(http.ListenAndServe("localhost:6060", nil))
 	}()

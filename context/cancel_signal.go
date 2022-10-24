@@ -13,6 +13,7 @@ func useContext(ctx context.Context, id int) {
 		只读的chan
 		c.done 是“懒汉式”创建，只有调用了 Done() 方法的时候才会被创建。再次说明，函数返回的是一个只读的 channel，而且没有地方向这个 channel 里面写数据。
 		所以，直接调用读这个 channel，协程会被 block 住。一般通过搭配 select 来使用。一旦关闭，就会立即读出零值。
+
 		*/
 		case <-ctx.Done():
 			fmt.Println("comes to stop.", id)
