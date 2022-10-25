@@ -9,15 +9,6 @@ import (
 	"net/http"
 )
 
-func processing(ctx context.Context) {
-	limitOrderTransactionId, ok := ctx.Value("limit_order_transaction_id").(string)
-	if ok {
-		fmt.Printf("processing the transaction id: %s\n\n", limitOrderTransactionId)
-	} else {
-		fmt.Println("processing is over.")
-	}
-}
-
 const requestKey int = 0
 
 func WithRequestId(next http.Handler) http.Handler {
@@ -74,11 +65,6 @@ curl --location --request GET 'http://localhost:3333/cashier' \
 而在 Go 语言中并没有这个概念，因此需要在函数调用的时候传递 context。
 */
 func main() {
-
-	//ctx := context.Background()
-	//processing(ctx)
-	//ctx = context.WithValue(ctx, "limit_order_transaction_id", uuid.New().String())
-	//processing(ctx)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)

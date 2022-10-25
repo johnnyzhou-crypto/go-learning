@@ -1,4 +1,4 @@
-package errorhandler
+package main
 
 import (
 	"fmt"
@@ -25,12 +25,12 @@ type errorContext struct {
 	Message string
 }
 
-//directly return a customised error
+// directly return a customised error
 func (error customisedError) Error() string {
 	return error.originError.Error()
 }
 
-//new a customised error
+// new a customised error
 func (errorType ErrorType) New(msg string) error {
 	return customisedError{errorType: errorType, originError: errors.New(msg)}
 }

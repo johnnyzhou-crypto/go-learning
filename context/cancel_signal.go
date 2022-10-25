@@ -24,6 +24,10 @@ func useContext(ctx context.Context, id int) {
 	}
 }
 
+/*
+*
+https://zhuanlan.zhihu.com/p/68792989
+*/
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	go useContext(ctx, 10068)

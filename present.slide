@@ -1,4 +1,4 @@
-Thinking In Go
+Thinking In Web
 Oct 2022
 
 Johnny Zhou
@@ -13,30 +13,96 @@ Error handling
 Render
 
 * Go-chi
-web REST API
-Router
+- Web REST API
+- Router
+- Handler
 
+
+
+* What is context
+context.Background is the default, other chile contexts are derived from it.
+
+- Background returns a non-nil, empty Context. It is never canceled, has no values, and has no deadline. It is typically used by the main function, initialization, and tests, and as the top-level Context for incoming requests.
+
+- TODO returns a non-nil, empty Context. Code should use context. TODO when it's unclear which Context to use or it is not yet available (because the surrounding function has not yet been extended to accept a Context parameter).
 
 
 * Context
-What is context
-context.Background 是上下文的默认值，所有其他的上下文都应该从它衍生（Derived）出来。
-Background returns a non-nil, empty Context. It is never canceled, has no values, and has no deadline.
-It is typically used by the main function, initialization, and tests, and as the top-level Context for incoming requests.
-context.TODO 应该只在不确定应该使用哪种上下文时使用；
-TODO returns a non-nil, empty Context. Code should use context.
-TODO when it's unclear which Context to use or it is not yet available (because the surrounding function has not yet been extended to accept a Context parameter).
+- Specifically, its the context of the goroutine, which contains the running status and env configs, since Go 1.7.
+- Passing information, such as cancellation signal, timeout, deadline, k-v.
+- for simultaneous and HTTP request controlling, many libs use context as the first parameter. (e.g., sqlc lib)
+- To sum up, Context is used for delivering meta data and inform of the goroutine.
+
+* But why has Context?
+.image images/context.png _ 600
+https://blog.csdn.net/pengpengzhou/article/details/107123560
+
+* Context brief
+``
+type Context interface {
+	Deadline() (deadline time.Time, ok bool)
+	Done() <-chan struct{}
+	Err() error
+	Value(key interface{}) interface{}
+}
+``
 
 * Context tree
 .image images/img.png _ 600
 
+* Context usage
+- Cancellation signals
+- Deadline
+- Timeout
+- Passing value
+
+* Cancellation signals
+As channel usage, once a goroutine received a signal, it should be stopped and return. contex.WithCancel() provides this cancellation signal.
+
+* Deadline
+.play context/context_deadline.go /START_OMIT/,/END_OMIT/
+
+* Timeout
+.play context/context_timeout.go /START_OMIT/,/END_OMIT/
+
+* Passing value
+.play -edit context/example/passing_value.go /START_OMIT/,/END_OMIT/
+
+* Context value
+emptyCtx is the root
+.image images/values.png _ 600
 
 
-# Error handling
+
+* In general
+- Do not store Contexts inside a struct type; instead, pass a Context explicitly to each function that needs it. The Context should be the first parameter, typically named ctx.
+- Do not pass a nil Context, even if a function permits it. Pass context.TODO if you are unsure about which Context to use.
+- Use context Values only for request-scoped data that transits processes and APIs, not for passing optional parameters to functions.
+- The same Context may be passed to functions running in different goroutines; Contexts are safe for simultaneous use by multiple goroutines.
+
+* Error
 错误和异常从语言机制上面讲，就是error和panic的区别，放到别的语言也一样，别的语言没有error类型，但是有错误码之类的，没有panic，但是有throw之类的。
+compare with java
 
+* errors package
+- New
+- panic
+- recover
+- unwrap
+- Is
+
+
+
+* error handling example
+- kratos
+
+- kitex
+https://github.com/cloudwego/kitex-examples/blob/main/bizdemo/easy_note/pkg/errno/errno.go
+
+- etc..
 
 * Render
 manage HTTP request / response payloads
+
 link: https://github.com/go-chi/render
 
