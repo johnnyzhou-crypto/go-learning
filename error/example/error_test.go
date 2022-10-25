@@ -1,4 +1,4 @@
-package main
+package example
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+// go test -v
 func TestContext(t *testing.T) {
 
 	err := BadLimitOrder.New("an_error")

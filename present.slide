@@ -17,6 +17,7 @@ Render
 - Router
 - Handler
 
+* Router
 
 
 * What is context
@@ -83,6 +84,22 @@ emptyCtx is the root
 * Error
 错误和异常从语言机制上面讲，就是error和panic的区别，放到别的语言也一样，别的语言没有error类型，但是有错误码之类的，没有panic，但是有throw之类的。
 compare with java
+
+* Compare with Java
+- Exceptions
+RuntimeException(unchecked)
+other exceptions(checked)
+
+- Error
+such as OutOfMemoryError, LinkageError and StackOverflowError.
+
+* Golang
+- panic
+error to panic. (e.g., request timeout)
+
+- recover
+panic to error (e.g., division 1/0)
+
 
 * errors package
 - New
