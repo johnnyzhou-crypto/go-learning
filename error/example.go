@@ -1,5 +1,11 @@
 package main
 
+//http://jintang.zone/2021/04/28/go%E4%B8%AD%E7%9A%84err!=nil%E5%A5%BD%E7%83%A6%EF%BC%9F%E6%95%99%E4%BD%A0%E6%80%8E%E4%B9%88%E4%BC%98%E9%9B%85%E5%9C%B0%E5%A4%84%E7%90%86error.html
+//golang 处理error的经验总结
+
+//three types of handling error strategy
+//https://www.zhihu.com/question/27158146
+
 //
 //import (
 //	"context"

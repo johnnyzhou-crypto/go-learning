@@ -10,18 +10,70 @@ https://crypto.com/
 Go-chi
 Context
 Error handling
-Render
 
-* Go-chi
-- Web REST API
+* Go-chi web
 - Router
 - Handler
 
 * Router
+Start from simple Http Server
+.play chi/simpleHttp.go /START_OMIT/,/END_OMIT/
 
+* Working mechanism
+- ListenAndServe
+- HandleFunc
+
+* ListenAndServe
+- Listen function
+Listening local port using Listen function
+
+- Server
+Implementing Server structure
+
+
+* HandleFunc
+- Every request is routing to its HandleFunc to handle.
+- Every Http server instance has a ServerMux structure
+``
+type ServeMux struct {
+ mu    sync.RWMutex                 // read write lock, simultaneous
+ m     map[string]muxEntry          // rules to handler map
+ es    []muxEntry // slice of entries sorted from longest to shortest.
+ hosts bool // whether any patterns contain hostnames
+}
+``
+``
+type muxEntry struct {
+   h       Handler  // customised handler function, defined by user
+   pattern string   // rule matching pattern
+}
+``
+
+* Http Server in general
+- http.ListenAndServe
+- http.ServeMux
+- http.Handler
+- other net/http
+
+* http.ListenAndServe
+listening port
+decode requests
+save Mux/Router
+
+* http.ServeMux
+pattern and handler processing
+mapping handler using pattern
+implementing handler
+
+* http.Handler
+ServeHTTP
+HandlerFunc
+
+* other net/http
+github.com/gorilla/mux
 
 * What is context
-context.Background is the default, other chile contexts are derived from it.
+context.Background is the default, other child contexts are derived from it.
 
 - Background returns a non-nil, empty Context. It is never canceled, has no values, and has no deadline. It is typically used by the main function, initialization, and tests, and as the top-level Context for incoming requests.
 
@@ -101,6 +153,11 @@ error to panic. (e.g., request timeout)
 panic to error (e.g., division 1/0)
 
 
+
+
+
+
+
 * errors package
 - New
 - panic
@@ -116,10 +173,19 @@ panic to error (e.g., division 1/0)
 - kitex
 https://github.com/cloudwego/kitex-examples/blob/main/bizdemo/easy_note/pkg/errno/errno.go
 
+- three layout strategy
+wrap -> withMessage -> controller
+
 - etc..
 
-* Render
-manage HTTP request / response payloads
 
-link: https://github.com/go-chi/render
+* references:
+https://github.com/gorilla/mux
+https://go.dev/blog/go1.13-errors
+https://studygolang.com/articles/31643
+https://www.zhihu.com/question/27158146
+https://chai2010.cn/advanced-go-programming-book/ch5-web/ch5-01-introduction.html
+https://blog.csdn.net/pengpengzhou/article/details/107123560
+https://blog.csdn.net/pengpengzhou/article/details/107123560
+etc
 

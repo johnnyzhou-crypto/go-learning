@@ -37,6 +37,11 @@ func recover_example() {
 	fmt.Println(res)
 }
 
+/*
+*
+go源代码很多地方写panic, 但是工程实践业务代码不要主动写panic，
+理论上panic只存在于server启动阶段，比如config文件解析失败，端口监听失败等等，所有业务逻辑禁止主动panic，所有异步的goroutine都要用recover去兜底处理。
+*/
 func panic_example() {
 	defer func() {
 		if r := recover(); r != nil {
