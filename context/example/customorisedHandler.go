@@ -50,8 +50,9 @@ func CustomisedHandler(writer http.ResponseWriter, request *http.Request) error 
 	req := request.WithContext(ctx)
 	reqId = GetRequestId(req.Context())
 	fmt.Printf("request id is: %s\n\n", reqId)
+	writer.WriteHeader(http.StatusOK)
 	//todo
-	writer.Write([]byte("foo"))
+	writer.Write([]byte(fmt.Sprintf("welcome to Cashier service.\n")))
 	return nil
 }
 

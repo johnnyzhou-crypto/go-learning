@@ -11,11 +11,8 @@ Go-chi
 Context
 Error handling
 
-* Go-chi web
-- Router
-- Handler
 
-* Router
+* Go-chi
 Start from simple Http Server
 .play chi/simpleHttp.go /START_OMIT/,/END_OMIT/
 
@@ -33,7 +30,7 @@ Implementing Server structure
 
 * HandleFunc
 - Every request is routing to its HandleFunc to handle.
-- Every Http server instance has a ServerMux structure
+- Every Http server instance has a ServerMux, transfer pattern to every handleFunc
 ``
 type ServeMux struct {
  mu    sync.RWMutex                 // read write lock, simultaneous
@@ -53,24 +50,21 @@ type muxEntry struct {
 - http.ListenAndServe
 - http.ServeMux
 - http.Handler
-- other net/http
 
 * http.ListenAndServe
-listening port
-decode requests
-save Mux/Router
+1. listening port
+2. decode requests
+3. save Mux/Router for routing procedure
 
 * http.ServeMux
-pattern and handler processing
-mapping handler using pattern
-implementing handler
+1. pattern and handler processing
+2. mapping handler using pattern
+3. implementing handler to match url to target handler
 
 * http.Handler
-ServeHTTP
-HandlerFunc
+1. implementing ServeHTTP to handle requests
+2. transfer request function to http.Handler using HandlerFunc
 
-* other net/http
-github.com/gorilla/mux
 
 * What is context
 context.Background is the default, other child contexts are derived from it.
@@ -103,6 +97,9 @@ type Context interface {
 * Context tree
 .image images/img.png _ 600
 
+* Context tree
+.image images/contextTree.png _ 600
+
 * Context usage
 - Cancellation signals
 - Deadline
@@ -113,7 +110,7 @@ type Context interface {
 As channel usage, once a goroutine received a signal, it should be stopped and return. contex.WithCancel() provides this cancellation signal.
 
 * Deadline
-.play context/context_deadline.go /START_OMIT/,/END_OMIT/
+.play -edit context/context_deadline.go /START_OMIT/,/END_OMIT/
 
 * Timeout
 .play context/context_timeout.go /START_OMIT/,/END_OMIT/
@@ -134,8 +131,7 @@ emptyCtx is the root
 - The same Context may be passed to functions running in different goroutines; Contexts are safe for simultaneous use by multiple goroutines.
 
 * Error
-错误和异常从语言机制上面讲，就是error和panic的区别，放到别的语言也一样，别的语言没有error类型，但是有错误码之类的，没有panic，但是有throw之类的。
-compare with java
+Compare with java
 
 * Compare with Java
 - Exceptions
@@ -186,6 +182,7 @@ https://studygolang.com/articles/31643
 https://www.zhihu.com/question/27158146
 https://chai2010.cn/advanced-go-programming-book/ch5-web/ch5-01-introduction.html
 https://blog.csdn.net/pengpengzhou/article/details/107123560
-https://blog.csdn.net/pengpengzhou/article/details/107123560
+https://zhuanlan.zhihu.com/p/68792989
+https://juejin.cn/post/7085190229782429727
 etc
 

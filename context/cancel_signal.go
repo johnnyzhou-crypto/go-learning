@@ -36,6 +36,6 @@ func main() {
 	总体来看，cancel() 方法的功能就是关闭 channel：c.done；递归地取消它的所有子节点；从父节点从删除自己。达到的效果是通过关闭 channel，将取消信号传递给了它的所有子节点。
 	goroutine 接收到取消信号的方式就是 select 语句中的读 c.done 被选中。
 	*/
-	cancel()
+	defer cancel()
 	time.Sleep(1 * time.Second)
 }

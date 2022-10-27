@@ -22,11 +22,15 @@ Golang错误和异常（panic）是可以互相转换的：
 异常转错误：比如panic触发的异常被recover恢复后，将返回值中error类型的变量进行赋值，以便上层函数继续走错误处理流程。
 */
 func main() {
-	//panic_example()
-	recover_example()
+	panicWithRecoverExample()
 }
 
-func recover_example() {
+/*
+*
+go源代码很多地方写panic, 但是工程实践业务代码不要主动写panic，
+理论上panic只存在于server启动阶段，比如config文件解析失败，端口监听失败等等，所有业务逻辑禁止主动panic，所有异步的goroutine都要用recover去兜底处理。
+*/
+func recoverExample() {
 	defer func() {
 		err := recover()
 		if err != nil {
@@ -37,12 +41,7 @@ func recover_example() {
 	fmt.Println(res)
 }
 
-/*
-*
-go源代码很多地方写panic, 但是工程实践业务代码不要主动写panic，
-理论上panic只存在于server启动阶段，比如config文件解析失败，端口监听失败等等，所有业务逻辑禁止主动panic，所有异步的goroutine都要用recover去兜底处理。
-*/
-func panic_example() {
+func panicWithRecoverExample() {
 	defer func() {
 		if r := recover(); r != nil {
 			fmt.Println("calm down and eat a banana")
