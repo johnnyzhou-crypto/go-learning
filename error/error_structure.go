@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"my-test-service/error/example"
+	_ "my-test-service/error/example"
 )
 
 type badValueError struct {
@@ -32,4 +34,14 @@ func main() {
 	} else {
 		log.Println("wrong")
 	}
+
+	//errorf
+	simpleError := errors.New("a simple error")
+	simpleError2 := fmt.Errorf("an error from a %s string", simpleError)
+	fmt.Println(simpleError2)
+
+	err2 := errors.New("an_error")
+	wrappedError := example.Wrapf(err2, "error %s", "[customised Error]")
+	fmt.Println(wrappedError)
+
 }

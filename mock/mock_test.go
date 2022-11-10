@@ -11,7 +11,7 @@ import (
 func TestGetVersion(t *testing.T) {
 	mockController := gomock.NewController(t)
 	mockSpider := spider.NewMockSpider(mockController)
-	mockSpider.EXPECT().GetBody().Return("go1.19.2")
+	mockSpider.EXPECT().GetBody().Return("go1.19.1")
 	goVersion := GetGoVersion(mockSpider)
 
 	if goVersion != "go1.19.2" {
